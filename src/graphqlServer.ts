@@ -1,6 +1,6 @@
 import { ApolloServer } from 'apollo-server-koa'
 
-import { PingDataSource } from './modules/data-sources'
+import { PingDataSource, TagsDataSource } from './modules/data-sources'
 import { config } from './config'
 import { GraphDataSources } from './types'
 import { MainModule } from './modules'
@@ -8,6 +8,7 @@ import { createContext } from './context'
 
 const dataSources = (): GraphDataSources => ({
   ping: new PingDataSource(config.dataSources.up),
+  tags: new TagsDataSource(config.dataSources.up),
 })
 
 const { schema } = MainModule

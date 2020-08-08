@@ -31,6 +31,18 @@ export type Query = {
   __typename?: 'Query';
   version: Scalars['String'];
   ping?: Maybe<Ping>;
+  tags?: Maybe<TagsConnection>;
+};
+
+export type Tag = {
+  __typename?: 'Tag';
+  type: Scalars['String'];
+  id: Scalars['String'];
+};
+
+export type TagsConnection = {
+  __typename?: 'TagsConnection';
+  data?: Maybe<Array<Maybe<Tag>>>;
 };
 
 
@@ -115,6 +127,8 @@ export type ResolversTypes = {
   String: ResolverTypeWrapper<Scalars['String']>;
   Ping: ResolverTypeWrapper<Ping>;
   Meta: ResolverTypeWrapper<Meta>;
+  TagsConnection: ResolverTypeWrapper<TagsConnection>;
+  Tag: ResolverTypeWrapper<Tag>;
   Mutation: ResolverTypeWrapper<{}>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
 };
@@ -125,6 +139,8 @@ export type ResolversParentTypes = {
   String: Scalars['String'];
   Ping: Ping;
   Meta: Meta;
+  TagsConnection: TagsConnection;
+  Tag: Tag;
   Mutation: {};
   Boolean: Scalars['Boolean'];
 };
@@ -147,6 +163,18 @@ export type PingResolvers<ContextType = GraphRequestContext, ParentType extends 
 export type QueryResolvers<ContextType = GraphRequestContext, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   version?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   ping?: Resolver<Maybe<ResolversTypes['Ping']>, ParentType, ContextType>;
+  tags?: Resolver<Maybe<ResolversTypes['TagsConnection']>, ParentType, ContextType>;
+};
+
+export type TagResolvers<ContextType = GraphRequestContext, ParentType extends ResolversParentTypes['Tag'] = ResolversParentTypes['Tag']> = {
+  type?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
+};
+
+export type TagsConnectionResolvers<ContextType = GraphRequestContext, ParentType extends ResolversParentTypes['TagsConnection'] = ResolversParentTypes['TagsConnection']> = {
+  data?: Resolver<Maybe<Array<Maybe<ResolversTypes['Tag']>>>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 };
 
 export type Resolvers<ContextType = GraphRequestContext> = {
@@ -154,6 +182,8 @@ export type Resolvers<ContextType = GraphRequestContext> = {
   Mutation?: MutationResolvers<ContextType>;
   Ping?: PingResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
+  Tag?: TagResolvers<ContextType>;
+  TagsConnection?: TagsConnectionResolvers<ContextType>;
 };
 
 
