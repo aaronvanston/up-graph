@@ -1,0 +1,9 @@
+{
+  "name": "Up-Graph",
+  "version": "0.0.0",
+  "description": "Unofficial GraphQL layer for UP Bank API",
+  "main": "index.js",
+  "repository": "git@github.com:aaronvanston/Up-Graph.git",
+  "author": "Aaron Vanston",
+  "license": "MIT"
+}
