@@ -1,9 +1,35 @@
 {
-  "name": "Up-Graph",
+  "name": "up-graph",
   "version": "0.0.0",
   "description": "Unofficial GraphQL layer for UP Bank API",
   "main": "index.js",
   "repository": "git@github.com:aaronvanston/Up-Graph.git",
   "author": "Aaron Vanston",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "codegen": "graphql-codegen",
+    "codegen:watch": "nodemon --exec yarn codegen --watch type-defs.ts",
+    "lint": "tslint --project tsconfig.json --format stylish",
+    "build": "tsc",
+    "serve": "ts-node src/server.ts",
+    "start": "nodemon"
+  },
+  "dependencies": {
+    "@graphql-codegen/cli": "^1.17.7",
+    "@graphql-codegen/typescript": "^1.17.7",
+    "@graphql-codegen/typescript-resolvers": "^1.17.7",
+    "@graphql-modules/core": "^0.7.17",
+    "apollo-datasource": "^0.7.2",
+    "apollo-datasource-rest": "^0.9.3",
+    "apollo-server-koa": "^2.16.1",
+    "koa": "^2.13.0"
+  },
+  "devDependencies": {
+    "@types/koa": "^2.11.3",
+    "nodemon": "^2.0.4",
+    "ts-node": "^8.10.2",
+    "tslint": "^6.1.3",
+    "tslint-config-airbnb": "^5.11.2",
+    "typescript": "^3.9.7"
+  }
 }

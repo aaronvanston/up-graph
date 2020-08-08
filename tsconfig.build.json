@@ -1,0 +1,10 @@
+{
+  "exclude": [
+    "**/__mocks__/**/*",
+    "**/__fixtures__/**/*",
+    "**/*.test.ts",
+    "src/testing/**/*"
+  ],
+  "extends": "./tsconfig.json",
+  "include": ["src/**/*"]
+}
