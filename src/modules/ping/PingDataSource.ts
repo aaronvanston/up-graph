@@ -1,6 +1,6 @@
-import { RESTDataSource } from 'apollo-datasource-rest'
+import { RESTDataSourceWithAuth } from '../../data-sources/RESTDataSourceWithAuth'
 
-export class PingDataSource extends RESTDataSource {
+export class PingDataSource extends RESTDataSourceWithAuth {
   constructor(baseURL: string) {
     super()
     this.baseURL = baseURL
