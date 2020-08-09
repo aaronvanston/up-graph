@@ -9,5 +9,8 @@ generates:
       - typescript-resolvers
     config:
       contextType: ../types#GraphRequestContext
+      scalars:
+        Date: Date
+        DateTime: Date
       namingConvention:
         transformUnderscore: true

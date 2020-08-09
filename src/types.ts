@@ -1,7 +1,12 @@
 import { DataSource } from 'apollo-datasource'
-import { PingDataSource, TagsDataSource } from './modules/data-sources'
+import {
+  AccountsDataSource,
+  PingDataSource,
+  TagsDataSource,
+} from './modules/data-sources'
 
 export interface GraphDataSources {
+  accounts: AccountsDataSource
   ping: PingDataSource
   tags: TagsDataSource
 
