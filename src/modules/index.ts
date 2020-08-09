@@ -7,6 +7,7 @@ import { MoneyModule } from './money'
 import { PingModule } from './ping'
 import { TagsModule } from './tags'
 import { TransactionsModule } from './transactions'
+import { WebhooksModule } from './webhooks'
 
 export const MainModule = new GraphQLModule({
   imports: [
@@ -17,5 +18,6 @@ export const MainModule = new GraphQLModule({
     PingModule,
     TagsModule,
     TransactionsModule,
+    WebhooksModule,
   ],
 })

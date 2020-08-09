@@ -23,6 +23,8 @@ export type Query = {
   tags?: Maybe<Array<Maybe<Tag>>>;
   transactions?: Maybe<Array<Maybe<Transaction>>>;
   transaction?: Maybe<Transaction>;
+  webhooks?: Maybe<Array<Maybe<Webhook>>>;
+  webhook?: Maybe<Webhook>;
 };
 
 
@@ -32,6 +34,11 @@ export type QueryAccountArgs = {
 
 
 export type QueryTransactionArgs = {
+  id: Scalars['String'];
+};
+
+
+export type QueryWebhookArgs = {
   id: Scalars['String'];
 };
 
@@ -131,6 +138,21 @@ export type Cashback = {
   amount: MoneyObject;
 };
 
+export type Webhook = {
+  __typename?: 'Webhook';
+  type: Scalars['String'];
+  id: Scalars['String'];
+  attributes: WebhookAttributes;
+};
+
+export type WebhookAttributes = {
+  __typename?: 'WebhookAttributes';
+  url: Scalars['String'];
+  description: Scalars['String'];
+  secretKey: Scalars['String'];
+  createdAt: Scalars['DateTime'];
+};
+
 
 
 export type ResolverTypeWrapper<T> = Promise<T> | T;
@@ -228,6 +250,8 @@ export type ResolversTypes = {
   HoldInfo: ResolverTypeWrapper<HoldInfo>;
   RoundUp: ResolverTypeWrapper<RoundUp>;
   Cashback: ResolverTypeWrapper<Cashback>;
+  Webhook: ResolverTypeWrapper<Webhook>;
+  WebhookAttributes: ResolverTypeWrapper<WebhookAttributes>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
 };
 
@@ -250,6 +274,8 @@ export type ResolversParentTypes = {
   HoldInfo: HoldInfo;
   RoundUp: RoundUp;
   Cashback: Cashback;
+  Webhook: Webhook;
+  WebhookAttributes: WebhookAttributes;
   Boolean: Scalars['Boolean'];
 };
 
@@ -261,6 +287,8 @@ export type QueryResolvers<ContextType = GraphRequestContext, ParentType extends
   tags?: Resolver<Maybe<Array<Maybe<ResolversTypes['Tag']>>>, ParentType, ContextType>;
   transactions?: Resolver<Maybe<Array<Maybe<ResolversTypes['Transaction']>>>, ParentType, ContextType>;
   transaction?: Resolver<Maybe<ResolversTypes['Transaction']>, ParentType, ContextType, RequireFields<QueryTransactionArgs, 'id'>>;
+  webhooks?: Resolver<Maybe<Array<Maybe<ResolversTypes['Webhook']>>>, ParentType, ContextType>;
+  webhook?: Resolver<Maybe<ResolversTypes['Webhook']>, ParentType, ContextType, RequireFields<QueryWebhookArgs, 'id'>>;
 };
 
 export type MutationResolvers<ContextType = GraphRequestContext, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
@@ -354,6 +382,21 @@ export type CashbackResolvers<ContextType = GraphRequestContext, ParentType exte
   __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 };
 
+export type WebhookResolvers<ContextType = GraphRequestContext, ParentType extends ResolversParentTypes['Webhook'] = ResolversParentTypes['Webhook']> = {
+  type?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  attributes?: Resolver<ResolversTypes['WebhookAttributes'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
+};
+
+export type WebhookAttributesResolvers<ContextType = GraphRequestContext, ParentType extends ResolversParentTypes['WebhookAttributes'] = ResolversParentTypes['WebhookAttributes']> = {
+  url?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  description?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  secretKey?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
+};
+
 export type Resolvers<ContextType = GraphRequestContext> = {
   Query?: QueryResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
@@ -370,6 +413,8 @@ export type Resolvers<ContextType = GraphRequestContext> = {
   HoldInfo?: HoldInfoResolvers<ContextType>;
   RoundUp?: RoundUpResolvers<ContextType>;
   Cashback?: CashbackResolvers<ContextType>;
+  Webhook?: WebhookResolvers<ContextType>;
+  WebhookAttributes?: WebhookAttributesResolvers<ContextType>;
 };
 
 

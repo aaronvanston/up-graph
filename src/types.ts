@@ -4,6 +4,7 @@ import {
   PingDataSource,
   TagsDataSource,
   TransactionsDataSource,
+  WebhooksDataSource,
 } from './modules/data-sources'
 
 export interface GraphDataSources {
@@ -11,6 +12,7 @@ export interface GraphDataSources {
   ping: PingDataSource
   tags: TagsDataSource
   transactions: TransactionsDataSource
+  webhooks: WebhooksDataSource
 
   [name: string]: DataSource<GraphRequestContext>
 }
