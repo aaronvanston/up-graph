@@ -4,6 +4,7 @@ export const typeDefs = gql`
   extend type Query {
     accounts: [Account]
     account(id: String!): Account
+    accountTransactions(id: String!): [Transaction]!
   }
 
   type Account {

@@ -6,5 +6,7 @@ export const resolvers: Resolvers = {
       dataSources.accounts.getAccount(id),
     accounts: (_parent, _args, { dataSources }) =>
       dataSources.accounts.getAccounts(),
+    accountTransactions: (_parent, { id }, { dataSources }) =>
+      dataSources.accounts.getAccountTransactions(id),
   },
 }
