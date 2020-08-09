@@ -3,12 +3,14 @@ import {
   AccountsDataSource,
   PingDataSource,
   TagsDataSource,
+  TransactionsDataSource,
 } from './modules/data-sources'
 
 export interface GraphDataSources {
   accounts: AccountsDataSource
   ping: PingDataSource
   tags: TagsDataSource
+  transactions: TransactionsDataSource
 
   [name: string]: DataSource<GraphRequestContext>
 }

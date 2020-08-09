@@ -21,10 +21,17 @@ export type Query = {
   account?: Maybe<Account>;
   ping?: Maybe<Ping>;
   tags?: Maybe<Array<Maybe<Tag>>>;
+  transactions?: Maybe<Array<Maybe<Transaction>>>;
+  transaction?: Maybe<Transaction>;
 };
 
 
 export type QueryAccountArgs = {
+  id: Scalars['String'];
+};
+
+
+export type QueryTransactionArgs = {
   id: Scalars['String'];
 };
 
@@ -34,6 +41,13 @@ export type Mutation = {
 };
 
 
+
+export type MoneyObject = {
+  __typename?: 'MoneyObject';
+  currencyCode: Scalars['String'];
+  value: Scalars['String'];
+  valueInBaseUnits: Scalars['Int'];
+};
 
 export type Account = {
   __typename?: 'Account';
@@ -46,15 +60,8 @@ export type AccountAttributes = {
   __typename?: 'AccountAttributes';
   displayName: Scalars['String'];
   accountType?: Maybe<AccountType>;
-  balance: AccountBalance;
+  balance: MoneyObject;
   createdAt: Scalars['DateTime'];
-};
-
-export type AccountBalance = {
-  __typename?: 'AccountBalance';
-  currencyCode: Scalars['String'];
-  value: Scalars['String'];
-  valueInBaseUnits: Scalars['Int'];
 };
 
 export enum AccountType {
@@ -77,6 +84,51 @@ export type Tag = {
   __typename?: 'Tag';
   type: Scalars['String'];
   id: Scalars['String'];
+};
+
+export type Transaction = {
+  __typename?: 'Transaction';
+  type: Scalars['String'];
+  id: Scalars['String'];
+  attributes?: Maybe<TransactionAttributes>;
+};
+
+export type TransactionAttributes = {
+  __typename?: 'TransactionAttributes';
+  status: TransactionStatus;
+  rawText?: Maybe<Scalars['String']>;
+  description: Scalars['String'];
+  message?: Maybe<Scalars['String']>;
+  holdInfo?: Maybe<HoldInfo>;
+  roundUp?: Maybe<RoundUp>;
+  cashback?: Maybe<Cashback>;
+  amount: MoneyObject;
+  foreignAmount?: Maybe<MoneyObject>;
+  settledAt?: Maybe<Scalars['DateTime']>;
+  createdAt: Scalars['DateTime'];
+};
+
+export enum TransactionStatus {
+  Held = 'HELD',
+  Settled = 'SETTLED'
+}
+
+export type HoldInfo = {
+  __typename?: 'HoldInfo';
+  amount: MoneyObject;
+  foreignAmount?: Maybe<MoneyObject>;
+};
+
+export type RoundUp = {
+  __typename?: 'RoundUp';
+  amount: MoneyObject;
+  boostPortion?: Maybe<MoneyObject>;
+};
+
+export type Cashback = {
+  __typename?: 'Cashback';
+  description: Scalars['String'];
+  amount: MoneyObject;
 };
 
 
@@ -162,14 +214,20 @@ export type ResolversTypes = {
   Mutation: ResolverTypeWrapper<{}>;
   Date: ResolverTypeWrapper<Scalars['Date']>;
   DateTime: ResolverTypeWrapper<Scalars['DateTime']>;
+  MoneyObject: ResolverTypeWrapper<MoneyObject>;
+  Int: ResolverTypeWrapper<Scalars['Int']>;
   Account: ResolverTypeWrapper<Account>;
   AccountAttributes: ResolverTypeWrapper<AccountAttributes>;
-  AccountBalance: ResolverTypeWrapper<AccountBalance>;
-  Int: ResolverTypeWrapper<Scalars['Int']>;
   AccountType: AccountType;
   Ping: ResolverTypeWrapper<Ping>;
   Meta: ResolverTypeWrapper<Meta>;
   Tag: ResolverTypeWrapper<Tag>;
+  Transaction: ResolverTypeWrapper<Transaction>;
+  TransactionAttributes: ResolverTypeWrapper<TransactionAttributes>;
+  TransactionStatus: TransactionStatus;
+  HoldInfo: ResolverTypeWrapper<HoldInfo>;
+  RoundUp: ResolverTypeWrapper<RoundUp>;
+  Cashback: ResolverTypeWrapper<Cashback>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
 };
 
@@ -180,13 +238,18 @@ export type ResolversParentTypes = {
   Mutation: {};
   Date: Scalars['Date'];
   DateTime: Scalars['DateTime'];
+  MoneyObject: MoneyObject;
+  Int: Scalars['Int'];
   Account: Account;
   AccountAttributes: AccountAttributes;
-  AccountBalance: AccountBalance;
-  Int: Scalars['Int'];
   Ping: Ping;
   Meta: Meta;
   Tag: Tag;
+  Transaction: Transaction;
+  TransactionAttributes: TransactionAttributes;
+  HoldInfo: HoldInfo;
+  RoundUp: RoundUp;
+  Cashback: Cashback;
   Boolean: Scalars['Boolean'];
 };
 
@@ -196,6 +259,8 @@ export type QueryResolvers<ContextType = GraphRequestContext, ParentType extends
   account?: Resolver<Maybe<ResolversTypes['Account']>, ParentType, ContextType, RequireFields<QueryAccountArgs, 'id'>>;
   ping?: Resolver<Maybe<ResolversTypes['Ping']>, ParentType, ContextType>;
   tags?: Resolver<Maybe<Array<Maybe<ResolversTypes['Tag']>>>, ParentType, ContextType>;
+  transactions?: Resolver<Maybe<Array<Maybe<ResolversTypes['Transaction']>>>, ParentType, ContextType>;
+  transaction?: Resolver<Maybe<ResolversTypes['Transaction']>, ParentType, ContextType, RequireFields<QueryTransactionArgs, 'id'>>;
 };
 
 export type MutationResolvers<ContextType = GraphRequestContext, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
@@ -210,6 +275,13 @@ export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<ResolversT
   name: 'DateTime';
 }
 
+export type MoneyObjectResolvers<ContextType = GraphRequestContext, ParentType extends ResolversParentTypes['MoneyObject'] = ResolversParentTypes['MoneyObject']> = {
+  currencyCode?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  value?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  valueInBaseUnits?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
+};
+
 export type AccountResolvers<ContextType = GraphRequestContext, ParentType extends ResolversParentTypes['Account'] = ResolversParentTypes['Account']> = {
   type?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
@@ -220,15 +292,8 @@ export type AccountResolvers<ContextType = GraphRequestContext, ParentType exten
 export type AccountAttributesResolvers<ContextType = GraphRequestContext, ParentType extends ResolversParentTypes['AccountAttributes'] = ResolversParentTypes['AccountAttributes']> = {
   displayName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   accountType?: Resolver<Maybe<ResolversTypes['AccountType']>, ParentType, ContextType>;
-  balance?: Resolver<ResolversTypes['AccountBalance'], ParentType, ContextType>;
+  balance?: Resolver<ResolversTypes['MoneyObject'], ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
-};
-
-export type AccountBalanceResolvers<ContextType = GraphRequestContext, ParentType extends ResolversParentTypes['AccountBalance'] = ResolversParentTypes['AccountBalance']> = {
-  currencyCode?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  value?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  valueInBaseUnits?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 };
 
@@ -249,17 +314,62 @@ export type TagResolvers<ContextType = GraphRequestContext, ParentType extends R
   __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 };
 
+export type TransactionResolvers<ContextType = GraphRequestContext, ParentType extends ResolversParentTypes['Transaction'] = ResolversParentTypes['Transaction']> = {
+  type?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  attributes?: Resolver<Maybe<ResolversTypes['TransactionAttributes']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
+};
+
+export type TransactionAttributesResolvers<ContextType = GraphRequestContext, ParentType extends ResolversParentTypes['TransactionAttributes'] = ResolversParentTypes['TransactionAttributes']> = {
+  status?: Resolver<ResolversTypes['TransactionStatus'], ParentType, ContextType>;
+  rawText?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  description?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  message?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  holdInfo?: Resolver<Maybe<ResolversTypes['HoldInfo']>, ParentType, ContextType>;
+  roundUp?: Resolver<Maybe<ResolversTypes['RoundUp']>, ParentType, ContextType>;
+  cashback?: Resolver<Maybe<ResolversTypes['Cashback']>, ParentType, ContextType>;
+  amount?: Resolver<ResolversTypes['MoneyObject'], ParentType, ContextType>;
+  foreignAmount?: Resolver<Maybe<ResolversTypes['MoneyObject']>, ParentType, ContextType>;
+  settledAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
+};
+
+export type HoldInfoResolvers<ContextType = GraphRequestContext, ParentType extends ResolversParentTypes['HoldInfo'] = ResolversParentTypes['HoldInfo']> = {
+  amount?: Resolver<ResolversTypes['MoneyObject'], ParentType, ContextType>;
+  foreignAmount?: Resolver<Maybe<ResolversTypes['MoneyObject']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
+};
+
+export type RoundUpResolvers<ContextType = GraphRequestContext, ParentType extends ResolversParentTypes['RoundUp'] = ResolversParentTypes['RoundUp']> = {
+  amount?: Resolver<ResolversTypes['MoneyObject'], ParentType, ContextType>;
+  boostPortion?: Resolver<Maybe<ResolversTypes['MoneyObject']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
+};
+
+export type CashbackResolvers<ContextType = GraphRequestContext, ParentType extends ResolversParentTypes['Cashback'] = ResolversParentTypes['Cashback']> = {
+  description?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  amount?: Resolver<ResolversTypes['MoneyObject'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
+};
+
 export type Resolvers<ContextType = GraphRequestContext> = {
   Query?: QueryResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Date?: GraphQLScalarType;
   DateTime?: GraphQLScalarType;
+  MoneyObject?: MoneyObjectResolvers<ContextType>;
   Account?: AccountResolvers<ContextType>;
   AccountAttributes?: AccountAttributesResolvers<ContextType>;
-  AccountBalance?: AccountBalanceResolvers<ContextType>;
   Ping?: PingResolvers<ContextType>;
   Meta?: MetaResolvers<ContextType>;
   Tag?: TagResolvers<ContextType>;
+  Transaction?: TransactionResolvers<ContextType>;
+  TransactionAttributes?: TransactionAttributesResolvers<ContextType>;
+  HoldInfo?: HoldInfoResolvers<ContextType>;
+  RoundUp?: RoundUpResolvers<ContextType>;
+  Cashback?: CashbackResolvers<ContextType>;
 };
 
 

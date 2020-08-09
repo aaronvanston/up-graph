@@ -4,6 +4,7 @@ import {
   AccountsDataSource,
   PingDataSource,
   TagsDataSource,
+  TransactionsDataSource,
 } from './modules/data-sources'
 import { config } from './config'
 import { GraphDataSources } from './types'
@@ -14,6 +15,7 @@ const dataSources = (): GraphDataSources => ({
   accounts: new AccountsDataSource(config.dataSources.up),
   ping: new PingDataSource(config.dataSources.up),
   tags: new TagsDataSource(config.dataSources.up),
+  transactions: new TransactionsDataSource(config.dataSources.up),
 })
 
 const { schema } = MainModule

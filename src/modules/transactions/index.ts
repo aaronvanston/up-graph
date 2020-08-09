@@ -8,7 +8,7 @@ import { MoneyModule } from '../money'
 import { resolvers } from './resolvers'
 import { typeDefs } from './type-defs'
 
-export const AccountsModule = new GraphQLModule({
+export const TransactionsModule = new GraphQLModule({
   context: (session: GraphRequestContext): GraphRequestContext => session,
   imports: [CommonModule, DatetimeModule, MoneyModule],
   typeDefs,

@@ -15,14 +15,8 @@ export const typeDefs = gql`
   type AccountAttributes {
     displayName: String!
     accountType: AccountType
-    balance: AccountBalance!
+    balance: MoneyObject!
     createdAt: DateTime!
-  }
-
-  type AccountBalance {
-    currencyCode: String!
-    value: String!
-    valueInBaseUnits: Int!
   }
 
   enum AccountType {
