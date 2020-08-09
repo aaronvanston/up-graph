@@ -10,7 +10,7 @@ export const typeDefs = gql`
 
   extend type Mutation {
     createWebhook(input: CreateWebhookInput!): Webhook!
-    deleteWebhook(input: DeleteWebhookInput!): DeleteWebhookPayload
+    deleteWebhook(input: DeleteWebhookInput!): DeleteWebhookPayload!
   }
 
   type Webhook {

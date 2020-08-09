@@ -7,4 +7,10 @@ export const resolvers: Resolvers = {
     transactions: (_parent, _args, { dataSources }) =>
       dataSources.transactions.getTransactions(),
   },
+  Mutation: {
+    createTransactionTags: (_parent, { input }, { dataSources }) =>
+      dataSources.transactions.addTransactionTags(input),
+    deleteTransactionTags: (_parent, { input }, { dataSources }) =>
+      dataSources.transactions.removeTransactionTags(input),
+  },
 }

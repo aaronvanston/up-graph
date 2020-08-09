@@ -6,6 +6,11 @@ export const typeDefs = gql`
     transaction(id: String!): Transaction
   }
 
+  extend type Mutation {
+    createTransactionTags(input: TransactionTagsInput!): TransactionTagsPayload!
+    deleteTransactionTags(input: TransactionTagsInput!): TransactionTagsPayload!
+  }
+
   type Transaction {
     type: String!
     id: String!
@@ -44,5 +49,19 @@ export const typeDefs = gql`
   type Cashback {
     description: String!
     amount: MoneyObject!
+  }
+
+  input TransactionTagsInput {
+    id: String!
+    tags: [TransactionTags_TagInput!]!
+  }
+
+  input TransactionTags_TagInput {
+    id: String!
+    type: String!
+  }
+
+  type TransactionTagsPayload {
+    tags: [Tag!]!
   }
 `
