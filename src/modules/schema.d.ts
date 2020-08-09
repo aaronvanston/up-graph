@@ -169,6 +169,7 @@ export type Account = {
   type: Scalars['String'];
   id: Scalars['String'];
   attributes: AccountAttributes;
+  transactions: Array<Maybe<Transaction>>;
 };
 
 export type AccountAttributes = {
@@ -527,6 +528,7 @@ export type AccountResolvers<ContextType = GraphRequestContext, ParentType exten
   type?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   attributes?: Resolver<ResolversTypes['AccountAttributes'], ParentType, ContextType>;
+  transactions?: Resolver<Array<Maybe<ResolversTypes['Transaction']>>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 };
 

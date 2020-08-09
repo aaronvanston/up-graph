@@ -9,4 +9,8 @@ export const resolvers: Resolvers = {
     accountTransactions: (_parent, { id }, { dataSources }) =>
       dataSources.accounts.getAccountTransactions(id),
   },
+  Account: {
+    transactions: (parent, _args, { dataSources }) =>
+      dataSources.accounts.getAccountTransactions(parent.id),
+  },
 }

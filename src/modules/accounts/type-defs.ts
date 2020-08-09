@@ -11,6 +11,7 @@ export const typeDefs = gql`
     type: String!
     id: String!
     attributes: AccountAttributes!
+    transactions: [Transaction]!
   }
 
   type AccountAttributes {
