@@ -3,7 +3,6 @@ import { GraphQLModule } from '@graphql-modules/core'
 import { GraphRequestContext } from '../../types'
 import { CommonModule } from '../common'
 import { DatetimeModule } from '../datetime'
-import { MoneyModule } from '../money'
 
 import { resolvers } from './resolvers'
 import { typeDefs } from './type-defs'

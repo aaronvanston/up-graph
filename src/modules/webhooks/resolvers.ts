@@ -7,4 +7,10 @@ export const resolvers: Resolvers = {
     webhooks: (_parent, _args, { dataSources }) =>
       dataSources.webhooks.getWebhooks(),
   },
+  Mutation: {
+    createWebhook: (_parent, { input }, { dataSources }) =>
+      dataSources.webhooks.createWebhook(input),
+    deleteWebhook: (_parent, { input }, { dataSources }) =>
+      dataSources.webhooks.deleteWebhook(input.id),
+  },
 }

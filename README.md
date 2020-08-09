@@ -14,13 +14,13 @@ Unofficial GraphQL layer for [UP Bank API](https://developer.up.com.au/)
 - Ping - `get`
 - Tags - `list`
 - Transactions - `list`, `get`
-- Webhooks - `list`, `get`,
+- Webhooks - `list`, `get`, `create`, `delete`
 
 **TODO:**
 
 - Tags - `add to transaction`, `remove from transaction`
 - Transactions - `list by account`
-- Webhooks - `create`, `delete`, `ping`, `list logs`
+- Webhooks - `ping`, `list logs`
 
 View the [GitHub project for this repo](https://github.com/aaronvanston/up-graph/projects) to track real time progress of functionality.
 

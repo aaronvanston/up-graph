@@ -23,7 +23,7 @@ export type Query = {
   tags?: Maybe<Array<Maybe<Tag>>>;
   transactions?: Maybe<Array<Maybe<Transaction>>>;
   transaction?: Maybe<Transaction>;
-  webhooks?: Maybe<Array<Maybe<Webhook>>>;
+  webhooks: Array<Maybe<Webhook>>;
   webhook?: Maybe<Webhook>;
 };
 
@@ -45,6 +45,18 @@ export type QueryWebhookArgs = {
 export type Mutation = {
   __typename?: 'Mutation';
   _empty?: Maybe<Scalars['String']>;
+  createWebhook: Webhook;
+  deleteWebhook?: Maybe<DeleteWebhookPayload>;
+};
+
+
+export type MutationCreateWebhookArgs = {
+  input: CreateWebhookInput;
+};
+
+
+export type MutationDeleteWebhookArgs = {
+  input: DeleteWebhookInput;
 };
 
 
@@ -149,8 +161,26 @@ export type WebhookAttributes = {
   __typename?: 'WebhookAttributes';
   url: Scalars['String'];
   description: Scalars['String'];
-  secretKey: Scalars['String'];
+  secretKey?: Maybe<Scalars['String']>;
   createdAt: Scalars['DateTime'];
+};
+
+export type CreateWebhookInput = {
+  attributes?: Maybe<CreateWebhookAttributesInput>;
+};
+
+export type CreateWebhookAttributesInput = {
+  url: Scalars['String'];
+  description: Scalars['String'];
+};
+
+export type DeleteWebhookInput = {
+  id: Scalars['String'];
+};
+
+export type DeleteWebhookPayload = {
+  __typename?: 'DeleteWebhookPayload';
+  id: Scalars['String'];
 };
 
 
@@ -252,6 +282,10 @@ export type ResolversTypes = {
   Cashback: ResolverTypeWrapper<Cashback>;
   Webhook: ResolverTypeWrapper<Webhook>;
   WebhookAttributes: ResolverTypeWrapper<WebhookAttributes>;
+  CreateWebhookInput: CreateWebhookInput;
+  CreateWebhook_AttributesInput: CreateWebhookAttributesInput;
+  DeleteWebhookInput: DeleteWebhookInput;
+  DeleteWebhookPayload: ResolverTypeWrapper<DeleteWebhookPayload>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
 };
 
@@ -276,6 +310,10 @@ export type ResolversParentTypes = {
   Cashback: Cashback;
   Webhook: Webhook;
   WebhookAttributes: WebhookAttributes;
+  CreateWebhookInput: CreateWebhookInput;
+  CreateWebhook_AttributesInput: CreateWebhookAttributesInput;
+  DeleteWebhookInput: DeleteWebhookInput;
+  DeleteWebhookPayload: DeleteWebhookPayload;
   Boolean: Scalars['Boolean'];
 };
 
@@ -287,12 +325,14 @@ export type QueryResolvers<ContextType = GraphRequestContext, ParentType extends
   tags?: Resolver<Maybe<Array<Maybe<ResolversTypes['Tag']>>>, ParentType, ContextType>;
   transactions?: Resolver<Maybe<Array<Maybe<ResolversTypes['Transaction']>>>, ParentType, ContextType>;
   transaction?: Resolver<Maybe<ResolversTypes['Transaction']>, ParentType, ContextType, RequireFields<QueryTransactionArgs, 'id'>>;
-  webhooks?: Resolver<Maybe<Array<Maybe<ResolversTypes['Webhook']>>>, ParentType, ContextType>;
+  webhooks?: Resolver<Array<Maybe<ResolversTypes['Webhook']>>, ParentType, ContextType>;
   webhook?: Resolver<Maybe<ResolversTypes['Webhook']>, ParentType, ContextType, RequireFields<QueryWebhookArgs, 'id'>>;
 };
 
 export type MutationResolvers<ContextType = GraphRequestContext, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   _empty?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  createWebhook?: Resolver<ResolversTypes['Webhook'], ParentType, ContextType, RequireFields<MutationCreateWebhookArgs, 'input'>>;
+  deleteWebhook?: Resolver<Maybe<ResolversTypes['DeleteWebhookPayload']>, ParentType, ContextType, RequireFields<MutationDeleteWebhookArgs, 'input'>>;
 };
 
 export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Date'], any> {
@@ -392,8 +432,13 @@ export type WebhookResolvers<ContextType = GraphRequestContext, ParentType exten
 export type WebhookAttributesResolvers<ContextType = GraphRequestContext, ParentType extends ResolversParentTypes['WebhookAttributes'] = ResolversParentTypes['WebhookAttributes']> = {
   url?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   description?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  secretKey?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  secretKey?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
+};
+
+export type DeleteWebhookPayloadResolvers<ContextType = GraphRequestContext, ParentType extends ResolversParentTypes['DeleteWebhookPayload'] = ResolversParentTypes['DeleteWebhookPayload']> = {
+  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 };
 
@@ -415,6 +460,7 @@ export type Resolvers<ContextType = GraphRequestContext> = {
   Cashback?: CashbackResolvers<ContextType>;
   Webhook?: WebhookResolvers<ContextType>;
   WebhookAttributes?: WebhookAttributesResolvers<ContextType>;
+  DeleteWebhookPayload?: DeleteWebhookPayloadResolvers<ContextType>;
 };
 
 

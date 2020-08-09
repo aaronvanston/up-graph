@@ -3,6 +3,7 @@
   "rules": {
     "import-name": false,
     "semicolon": false,
+    "trailing-comma": false,
     "variable-name": false,
     "object-shorthand-properties-first": false
   }
