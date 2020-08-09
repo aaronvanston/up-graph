@@ -1,6 +1,6 @@
 # up-graph 😎
 
-Unofficial GraphQL layer for UP Bank API
+Unofficial GraphQL layer for [UP Bank API](https://developer.up.com.au/)
 
 **Built using:**
 
