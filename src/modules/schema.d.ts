@@ -201,6 +201,7 @@ export type Webhook = {
   type: Scalars['String'];
   id: Scalars['String'];
   attributes: WebhookAttributes;
+  logs: Array<Maybe<WebhookLog>>;
 };
 
 export type WebhookAttributes = {
@@ -555,6 +556,7 @@ export type WebhookResolvers<ContextType = GraphRequestContext, ParentType exten
   type?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   attributes?: Resolver<ResolversTypes['WebhookAttributes'], ParentType, ContextType>;
+  logs?: Resolver<Array<Maybe<ResolversTypes['WebhookLog']>>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 };
 

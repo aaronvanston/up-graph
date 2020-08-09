@@ -17,6 +17,7 @@ export const typeDefs = gql`
     type: String!
     id: String!
     attributes: WebhookAttributes!
+    logs: [WebhookLog]!
   }
 
   type WebhookAttributes {

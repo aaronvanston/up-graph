@@ -17,4 +17,9 @@ export const resolvers: Resolvers = {
     deleteWebhook: (_parent, { input }, { dataSources }) =>
       dataSources.webhooks.deleteWebhook(input.id),
   },
+
+  Webhook: {
+    logs: (parent, _args, { dataSources }) =>
+      dataSources.webhooks.getWebhookLogs(parent.id),
+  },
 }
