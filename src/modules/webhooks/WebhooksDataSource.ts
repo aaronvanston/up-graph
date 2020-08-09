@@ -1,5 +1,11 @@
 import { RESTDataSourceWithAuth } from '../../data-sources/RESTDataSourceWithAuth'
-import { Webhook, DeleteWebhookPayload, CreateWebhookInput } from '../schema'
+import {
+  Webhook,
+  DeleteWebhookPayload,
+  CreateWebhookInput,
+  WebhookEvent,
+  WebhookLog,
+} from '../schema'
 
 export class WebhooksDataSource extends RESTDataSourceWithAuth {
   constructor(baseURL: string) {
@@ -15,6 +21,16 @@ export class WebhooksDataSource extends RESTDataSourceWithAuth {
   async getWebhook(id: string): Promise<Webhook> {
     const webhook = await this.get(`webhooks/${id}`)
     return webhook.data ?? null
+  }
+
+  async getWebhookLogs(id: string): Promise<WebhookLog[]> {
+    const webhookLogs = await this.get(`webhooks/${id}/logs`)
+    return webhookLogs.data ?? null
+  }
+
+  async pingWebhook(id: string): Promise<WebhookEvent> {
+    const webhookEvent = await this.post(`webhooks/${id}/ping`)
+    return webhookEvent.data ?? null
   }
 
   async createWebhook(

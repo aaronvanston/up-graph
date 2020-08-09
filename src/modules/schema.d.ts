@@ -25,6 +25,8 @@ export type Query = {
   transaction?: Maybe<Transaction>;
   webhooks: Array<Maybe<Webhook>>;
   webhook?: Maybe<Webhook>;
+  webhookLogs: Array<Maybe<WebhookLog>>;
+  webhookPing: WebhookEvent;
 };
 
 
@@ -39,6 +41,16 @@ export type QueryTransactionArgs = {
 
 
 export type QueryWebhookArgs = {
+  id: Scalars['String'];
+};
+
+
+export type QueryWebhookLogsArgs = {
+  id: Scalars['String'];
+};
+
+
+export type QueryWebhookPingArgs = {
   id: Scalars['String'];
 };
 
@@ -165,6 +177,58 @@ export type WebhookAttributes = {
   createdAt: Scalars['DateTime'];
 };
 
+export type WebhookLog = {
+  __typename?: 'WebhookLog';
+  type: Scalars['String'];
+  id: Scalars['String'];
+  attributes: WebhookLogAttributes;
+};
+
+export type WebhookLogAttributes = {
+  __typename?: 'WebhookLogAttributes';
+  request: WebhookLogRequest;
+  response?: Maybe<WebhookLogResponse>;
+  deliveryStatus: WebhookDeliveryStatus;
+  createdAt: Scalars['DateTime'];
+};
+
+export type WebhookLogRequest = {
+  __typename?: 'WebhookLogRequest';
+  body: Scalars['String'];
+};
+
+export type WebhookLogResponse = {
+  __typename?: 'WebhookLogResponse';
+  statusCode: Scalars['Int'];
+  body: Scalars['String'];
+};
+
+export enum WebhookDeliveryStatus {
+  Delivered = 'DELIVERED',
+  Undeliverable = 'UNDELIVERABLE',
+  BadResponseCode = 'BAD_RESPONSE_CODE'
+}
+
+export type WebhookEvent = {
+  __typename?: 'WebhookEvent';
+  type: Scalars['String'];
+  id: Scalars['String'];
+  attributes: WebhookEventAttributes;
+};
+
+export type WebhookEventAttributes = {
+  __typename?: 'WebhookEventAttributes';
+  eventType: WebhookEventType;
+  createdAt: Scalars['DateTime'];
+};
+
+export enum WebhookEventType {
+  TransactionCreated = 'TRANSACTION_CREATED',
+  TransactionSettled = 'TRANSACTION_SETTLED',
+  TransactionDeleted = 'TRANSACTION_DELETED',
+  Ping = 'PING'
+}
+
 export type CreateWebhookInput = {
   attributes?: Maybe<CreateWebhookAttributesInput>;
 };
@@ -282,6 +346,14 @@ export type ResolversTypes = {
   Cashback: ResolverTypeWrapper<Cashback>;
   Webhook: ResolverTypeWrapper<Webhook>;
   WebhookAttributes: ResolverTypeWrapper<WebhookAttributes>;
+  WebhookLog: ResolverTypeWrapper<WebhookLog>;
+  WebhookLogAttributes: ResolverTypeWrapper<WebhookLogAttributes>;
+  WebhookLogRequest: ResolverTypeWrapper<WebhookLogRequest>;
+  WebhookLogResponse: ResolverTypeWrapper<WebhookLogResponse>;
+  WebhookDeliveryStatus: WebhookDeliveryStatus;
+  WebhookEvent: ResolverTypeWrapper<WebhookEvent>;
+  WebhookEventAttributes: ResolverTypeWrapper<WebhookEventAttributes>;
+  WebhookEventType: WebhookEventType;
   CreateWebhookInput: CreateWebhookInput;
   CreateWebhook_AttributesInput: CreateWebhookAttributesInput;
   DeleteWebhookInput: DeleteWebhookInput;
@@ -310,6 +382,12 @@ export type ResolversParentTypes = {
   Cashback: Cashback;
   Webhook: Webhook;
   WebhookAttributes: WebhookAttributes;
+  WebhookLog: WebhookLog;
+  WebhookLogAttributes: WebhookLogAttributes;
+  WebhookLogRequest: WebhookLogRequest;
+  WebhookLogResponse: WebhookLogResponse;
+  WebhookEvent: WebhookEvent;
+  WebhookEventAttributes: WebhookEventAttributes;
   CreateWebhookInput: CreateWebhookInput;
   CreateWebhook_AttributesInput: CreateWebhookAttributesInput;
   DeleteWebhookInput: DeleteWebhookInput;
@@ -327,6 +405,8 @@ export type QueryResolvers<ContextType = GraphRequestContext, ParentType extends
   transaction?: Resolver<Maybe<ResolversTypes['Transaction']>, ParentType, ContextType, RequireFields<QueryTransactionArgs, 'id'>>;
   webhooks?: Resolver<Array<Maybe<ResolversTypes['Webhook']>>, ParentType, ContextType>;
   webhook?: Resolver<Maybe<ResolversTypes['Webhook']>, ParentType, ContextType, RequireFields<QueryWebhookArgs, 'id'>>;
+  webhookLogs?: Resolver<Array<Maybe<ResolversTypes['WebhookLog']>>, ParentType, ContextType, RequireFields<QueryWebhookLogsArgs, 'id'>>;
+  webhookPing?: Resolver<ResolversTypes['WebhookEvent'], ParentType, ContextType, RequireFields<QueryWebhookPingArgs, 'id'>>;
 };
 
 export type MutationResolvers<ContextType = GraphRequestContext, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
@@ -437,6 +517,45 @@ export type WebhookAttributesResolvers<ContextType = GraphRequestContext, Parent
   __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 };
 
+export type WebhookLogResolvers<ContextType = GraphRequestContext, ParentType extends ResolversParentTypes['WebhookLog'] = ResolversParentTypes['WebhookLog']> = {
+  type?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  attributes?: Resolver<ResolversTypes['WebhookLogAttributes'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
+};
+
+export type WebhookLogAttributesResolvers<ContextType = GraphRequestContext, ParentType extends ResolversParentTypes['WebhookLogAttributes'] = ResolversParentTypes['WebhookLogAttributes']> = {
+  request?: Resolver<ResolversTypes['WebhookLogRequest'], ParentType, ContextType>;
+  response?: Resolver<Maybe<ResolversTypes['WebhookLogResponse']>, ParentType, ContextType>;
+  deliveryStatus?: Resolver<ResolversTypes['WebhookDeliveryStatus'], ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
+};
+
+export type WebhookLogRequestResolvers<ContextType = GraphRequestContext, ParentType extends ResolversParentTypes['WebhookLogRequest'] = ResolversParentTypes['WebhookLogRequest']> = {
+  body?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
+};
+
+export type WebhookLogResponseResolvers<ContextType = GraphRequestContext, ParentType extends ResolversParentTypes['WebhookLogResponse'] = ResolversParentTypes['WebhookLogResponse']> = {
+  statusCode?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  body?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
+};
+
+export type WebhookEventResolvers<ContextType = GraphRequestContext, ParentType extends ResolversParentTypes['WebhookEvent'] = ResolversParentTypes['WebhookEvent']> = {
+  type?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  attributes?: Resolver<ResolversTypes['WebhookEventAttributes'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
+};
+
+export type WebhookEventAttributesResolvers<ContextType = GraphRequestContext, ParentType extends ResolversParentTypes['WebhookEventAttributes'] = ResolversParentTypes['WebhookEventAttributes']> = {
+  eventType?: Resolver<ResolversTypes['WebhookEventType'], ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
+};
+
 export type DeleteWebhookPayloadResolvers<ContextType = GraphRequestContext, ParentType extends ResolversParentTypes['DeleteWebhookPayload'] = ResolversParentTypes['DeleteWebhookPayload']> = {
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType>;
@@ -460,6 +579,12 @@ export type Resolvers<ContextType = GraphRequestContext> = {
   Cashback?: CashbackResolvers<ContextType>;
   Webhook?: WebhookResolvers<ContextType>;
   WebhookAttributes?: WebhookAttributesResolvers<ContextType>;
+  WebhookLog?: WebhookLogResolvers<ContextType>;
+  WebhookLogAttributes?: WebhookLogAttributesResolvers<ContextType>;
+  WebhookLogRequest?: WebhookLogRequestResolvers<ContextType>;
+  WebhookLogResponse?: WebhookLogResponseResolvers<ContextType>;
+  WebhookEvent?: WebhookEventResolvers<ContextType>;
+  WebhookEventAttributes?: WebhookEventAttributesResolvers<ContextType>;
   DeleteWebhookPayload?: DeleteWebhookPayloadResolvers<ContextType>;
 };
 
