@@ -8,6 +8,20 @@ Unofficial GraphQL layer for UP Bank API
 - [GraphQL Modules](https://graphql-modules.com/)
 - [TypeScript](https://www.typescriptlang.org/)
 
+## Supported functionality
+
+- Accounts - `list`, `get`
+- Tags - `list`
+- Ping - `get`
+
+**TODO:**
+
+- Tags - `add to transaction`, `remove from transaction`
+- Transactions - `list`, `get`, `list by account`
+- Webhooks - `list`, `create`, `get`, `delete`, `ping`, `list logs`
+
+View the [GitHub project for this repo](https://github.com/aaronvanston/up-graph/projects) to track real time progress of functionality.
+
 ## Running Locally
 
 ### Starting the dev server
