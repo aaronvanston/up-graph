@@ -15,15 +15,15 @@
     "start": "nodemon"
   },
   "dependencies": {
-    "@graphql-codegen/cli": "^1.17.7",
-    "@graphql-codegen/typescript": "^1.17.7",
-    "@graphql-codegen/typescript-resolvers": "^1.17.7",
-    "@graphql-modules/core": "^0.7.17",
-    "apollo-datasource": "^0.7.2",
-    "apollo-datasource-rest": "^0.9.3",
-    "apollo-server-koa": "^2.16.1",
-    "graphql-iso-date": "^3.6.1",
-    "koa": "^2.13.0"
+    "@graphql-codegen/cli": "1.17.7",
+    "@graphql-codegen/typescript": "1.17.7",
+    "@graphql-codegen/typescript-resolvers": "1.17.7",
+    "@graphql-modules/core": "0.7.17",
+    "apollo-datasource": "0.7.2",
+    "apollo-datasource-rest": "0.9.3",
+    "apollo-server-koa": "2.16.1",
+    "graphql-iso-date": "3.6.1",
+    "koa": "2.13.0"
   },
   "devDependencies": {
     "@types/graphql-iso-date": "3.4.0",
