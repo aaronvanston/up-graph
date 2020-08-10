@@ -34,17 +34,17 @@ export const typeDefs = gql`
   }
 
   type WebhookLogAttributes {
-    request: WebhookLogRequest!
-    response: WebhookLogResponse
+    request: WebhookLogAttributeRequest!
+    response: WebhookLogAttributeResponse
     deliveryStatus: WebhookDeliveryStatus!
     createdAt: DateTime!
   }
 
-  type WebhookLogRequest {
+  type WebhookLogAttributeRequest {
     body: String!
   }
 
-  type WebhookLogResponse {
+  type WebhookLogAttributeResponse {
     statusCode: Int!
     body: String!
   }
@@ -88,5 +88,21 @@ export const typeDefs = gql`
 
   type DeleteWebhookPayload {
     id: String!
+  }
+
+  type WebhooksResponse {
+    data: [Webhook]!
+  }
+
+  type WebhookResponse {
+    data: Webhook
+  }
+
+  type WebhookLogsResponse {
+    data: [WebhookLog]!
+  }
+
+  type WebhookPingResponse {
+    data: WebhookEvent
   }
 `

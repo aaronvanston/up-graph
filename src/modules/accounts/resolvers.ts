@@ -7,10 +7,10 @@ export const resolvers: Resolvers = {
     accounts: (_parent, _args, { dataSources }) =>
       dataSources.accounts.getAccounts(),
     accountTransactions: (_parent, { id }, { dataSources }) =>
-      dataSources.accounts.getAccountTransactions(id),
+      dataSources.transactions.geTransactionsByAccount(id),
   },
   Account: {
     transactions: (parent, _args, { dataSources }) =>
-      dataSources.accounts.getAccountTransactions(parent.id),
+      dataSources.transactions.geTransactionsByAccount(parent.id),
   },
 }

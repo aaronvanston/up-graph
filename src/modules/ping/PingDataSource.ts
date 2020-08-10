@@ -1,4 +1,5 @@
 import { RESTDataSourceWithAuth } from '../../data-sources/RESTDataSourceWithAuth'
+import { Ping } from '../schema'
 
 export class PingDataSource extends RESTDataSourceWithAuth {
   constructor(baseURL: string) {
@@ -6,7 +7,7 @@ export class PingDataSource extends RESTDataSourceWithAuth {
     this.baseURL = baseURL
   }
 
-  async getPing() {
-    return this.get('util/ping')
+  async getPing(): Promise<Ping> {
+    return this.get<Ping>('util/ping')
   }
 }

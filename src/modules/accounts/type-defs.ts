@@ -29,4 +29,12 @@ export const typeDefs = gql`
   extend type Transaction {
     account: Account!
   }
+
+  type AccountsResponse {
+    data: [Account]!
+  }
+
+  type AccountResponse {
+    data: Account
+  }
 `

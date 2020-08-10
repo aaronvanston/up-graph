@@ -50,8 +50,4 @@ export const typeDefs = gql`
     id: String!
     type: String!
   }
-
-  type TransactionTagsPayload {
-    tags: [Tag!]!
-  }
 `

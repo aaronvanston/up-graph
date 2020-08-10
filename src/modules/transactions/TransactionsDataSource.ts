@@ -3,6 +3,8 @@ import {
   Transaction,
   TransactionTagsInput,
   TransactionTagsPayload,
+  TransactionsResponse,
+  TransactionResponse,
 } from '../schema'
 
 export class TransactionsDataSource extends RESTDataSourceWithAuth {
@@ -12,17 +14,21 @@ export class TransactionsDataSource extends RESTDataSourceWithAuth {
   }
 
   async getTransactions(): Promise<Transaction[]> {
-    const transactions = await this.get('transactions')
+    const transactions = await this.get<TransactionsResponse>('transactions')
     return transactions.data ?? null
   }
 
   async getTransaction(id: string): Promise<Transaction> {
-    const transaction = await this.get(`transactions/${id}`)
+    const transaction = await this.get<TransactionResponse>(
+      `transactions/${id}`
+    )
     return transaction.data ?? null
   }
 
   async geTransactionsByAccount(id: string): Promise<Transaction[]> {
-    const transactions = await this.get(`accounts/${id}/transactions`)
+    const transactions = await this.get<TransactionsResponse>(
+      `accounts/${id}/transactions`
+    )
     return transactions.data ?? null
   }
 

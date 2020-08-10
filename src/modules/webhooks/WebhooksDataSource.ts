@@ -5,6 +5,10 @@ import {
   CreateWebhookInput,
   WebhookEvent,
   WebhookLog,
+  WebhooksResponse,
+  WebhookResponse,
+  WebhookLogsResponse,
+  WebhookPingResponse,
 } from '../schema'
 
 export class WebhooksDataSource extends RESTDataSourceWithAuth {
@@ -14,22 +18,26 @@ export class WebhooksDataSource extends RESTDataSourceWithAuth {
   }
 
   async getWebhooks(): Promise<Webhook[]> {
-    const webhooks = await this.get('webhooks')
+    const webhooks = await this.get<WebhooksResponse>('webhooks')
     return webhooks.data ?? null
   }
 
   async getWebhook(id: string): Promise<Webhook> {
-    const webhook = await this.get(`webhooks/${id}`)
+    const webhook = await this.get<WebhookResponse>(`webhooks/${id}`)
     return webhook.data ?? null
   }
 
   async getWebhookLogs(id: string): Promise<WebhookLog[]> {
-    const webhookLogs = await this.get(`webhooks/${id}/logs`)
+    const webhookLogs = await this.get<WebhookLogsResponse>(
+      `webhooks/${id}/logs`
+    )
     return webhookLogs.data ?? null
   }
 
   async pingWebhook(id: string): Promise<WebhookEvent> {
-    const webhookEvent = await this.post(`webhooks/${id}/ping`)
+    const webhookEvent = await this.post<WebhookPingResponse>(
+      `webhooks/${id}/ping`
+    )
     return webhookEvent.data ?? null
   }
 

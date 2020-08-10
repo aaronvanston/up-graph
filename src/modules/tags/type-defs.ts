@@ -2,11 +2,15 @@ import { gql } from 'apollo-server-koa'
 
 export const typeDefs = gql`
   extend type Query {
-    tags: [Tag]
+    tags: [Tag]!
   }
 
   type Tag {
     type: String!
     id: String!
+  }
+
+  type TagsResponse {
+    data: [Tag]!
   }
 `

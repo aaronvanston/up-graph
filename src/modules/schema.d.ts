@@ -17,7 +17,7 @@ export type Scalars = {
 export type Query = {
   __typename?: 'Query';
   version: Scalars['String'];
-  tags?: Maybe<Array<Maybe<Tag>>>;
+  tags: Array<Maybe<Tag>>;
   accounts?: Maybe<Array<Maybe<Account>>>;
   account?: Maybe<Account>;
   accountTransactions: Array<Maybe<Transaction>>;
@@ -104,6 +104,11 @@ export type Tag = {
   id: Scalars['String'];
 };
 
+export type TagsResponse = {
+  __typename?: 'TagsResponse';
+  data: Array<Maybe<Tag>>;
+};
+
 export type Transaction = {
   __typename?: 'Transaction';
   type: Scalars['String'];
@@ -160,11 +165,6 @@ export type TransactionTagsTagInput = {
   type: Scalars['String'];
 };
 
-export type TransactionTagsPayload = {
-  __typename?: 'TransactionTagsPayload';
-  tags: Array<Tag>;
-};
-
 export type Account = {
   __typename?: 'Account';
   type: Scalars['String'];
@@ -186,6 +186,16 @@ export enum AccountType {
   Saver = 'SAVER'
 }
 
+export type AccountsResponse = {
+  __typename?: 'AccountsResponse';
+  data: Array<Maybe<Account>>;
+};
+
+export type AccountResponse = {
+  __typename?: 'AccountResponse';
+  data?: Maybe<Account>;
+};
+
 export type Ping = {
   __typename?: 'Ping';
   meta: Meta;
@@ -195,6 +205,21 @@ export type Meta = {
   __typename?: 'Meta';
   id: Scalars['String'];
   statusEmoji: Scalars['String'];
+};
+
+export type TransactionsResponse = {
+  __typename?: 'TransactionsResponse';
+  data: Array<Maybe<Transaction>>;
+};
+
+export type TransactionResponse = {
+  __typename?: 'TransactionResponse';
+  data?: Maybe<Transaction>;
+};
+
+export type TransactionTagsPayload = {
+  __typename?: 'TransactionTagsPayload';
+  tags: Array<Tag>;
 };
 
 export type Webhook = {
@@ -222,19 +247,19 @@ export type WebhookLog = {
 
 export type WebhookLogAttributes = {
   __typename?: 'WebhookLogAttributes';
-  request: WebhookLogRequest;
-  response?: Maybe<WebhookLogResponse>;
+  request: WebhookLogAttributeRequest;
+  response?: Maybe<WebhookLogAttributeResponse>;
   deliveryStatus: WebhookDeliveryStatus;
   createdAt: Scalars['DateTime'];
 };
 
-export type WebhookLogRequest = {
-  __typename?: 'WebhookLogRequest';
+export type WebhookLogAttributeRequest = {
+  __typename?: 'WebhookLogAttributeRequest';
   body: Scalars['String'];
 };
 
-export type WebhookLogResponse = {
-  __typename?: 'WebhookLogResponse';
+export type WebhookLogAttributeResponse = {
+  __typename?: 'WebhookLogAttributeResponse';
   statusCode: Scalars['Int'];
   body: Scalars['String'];
 };
@@ -281,6 +306,26 @@ export type DeleteWebhookInput = {
 export type DeleteWebhookPayload = {
   __typename?: 'DeleteWebhookPayload';
   id: Scalars['String'];
+};
+
+export type WebhooksResponse = {
+  __typename?: 'WebhooksResponse';
+  data: Array<Maybe<Webhook>>;
+};
+
+export type WebhookResponse = {
+  __typename?: 'WebhookResponse';
+  data?: Maybe<Webhook>;
+};
+
+export type WebhookLogsResponse = {
+  __typename?: 'WebhookLogsResponse';
+  data: Array<Maybe<WebhookLog>>;
+};
+
+export type WebhookPingResponse = {
+  __typename?: 'WebhookPingResponse';
+  data?: Maybe<WebhookEvent>;
 };
 
 
@@ -369,6 +414,7 @@ export type ResolversTypes = {
   MoneyObject: ResolverTypeWrapper<MoneyObject>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
   Tag: ResolverTypeWrapper<Tag>;
+  TagsResponse: ResolverTypeWrapper<TagsResponse>;
   Transaction: ResolverTypeWrapper<Transaction>;
   TransactionAttributes: ResolverTypeWrapper<TransactionAttributes>;
   TransactionStatus: TransactionStatus;
@@ -377,18 +423,22 @@ export type ResolversTypes = {
   Cashback: ResolverTypeWrapper<Cashback>;
   TransactionTagsInput: TransactionTagsInput;
   TransactionTags_TagInput: TransactionTagsTagInput;
-  TransactionTagsPayload: ResolverTypeWrapper<TransactionTagsPayload>;
   Account: ResolverTypeWrapper<Account>;
   AccountAttributes: ResolverTypeWrapper<AccountAttributes>;
   AccountType: AccountType;
+  AccountsResponse: ResolverTypeWrapper<AccountsResponse>;
+  AccountResponse: ResolverTypeWrapper<AccountResponse>;
   Ping: ResolverTypeWrapper<Ping>;
   Meta: ResolverTypeWrapper<Meta>;
+  TransactionsResponse: ResolverTypeWrapper<TransactionsResponse>;
+  TransactionResponse: ResolverTypeWrapper<TransactionResponse>;
+  TransactionTagsPayload: ResolverTypeWrapper<TransactionTagsPayload>;
   Webhook: ResolverTypeWrapper<Webhook>;
   WebhookAttributes: ResolverTypeWrapper<WebhookAttributes>;
   WebhookLog: ResolverTypeWrapper<WebhookLog>;
   WebhookLogAttributes: ResolverTypeWrapper<WebhookLogAttributes>;
-  WebhookLogRequest: ResolverTypeWrapper<WebhookLogRequest>;
-  WebhookLogResponse: ResolverTypeWrapper<WebhookLogResponse>;
+  WebhookLogAttributeRequest: ResolverTypeWrapper<WebhookLogAttributeRequest>;
+  WebhookLogAttributeResponse: ResolverTypeWrapper<WebhookLogAttributeResponse>;
   WebhookDeliveryStatus: WebhookDeliveryStatus;
   WebhookEvent: ResolverTypeWrapper<WebhookEvent>;
   WebhookEventAttributes: ResolverTypeWrapper<WebhookEventAttributes>;
@@ -397,6 +447,10 @@ export type ResolversTypes = {
   CreateWebhook_AttributesInput: CreateWebhookAttributesInput;
   DeleteWebhookInput: DeleteWebhookInput;
   DeleteWebhookPayload: ResolverTypeWrapper<DeleteWebhookPayload>;
+  WebhooksResponse: ResolverTypeWrapper<WebhooksResponse>;
+  WebhookResponse: ResolverTypeWrapper<WebhookResponse>;
+  WebhookLogsResponse: ResolverTypeWrapper<WebhookLogsResponse>;
+  WebhookPingResponse: ResolverTypeWrapper<WebhookPingResponse>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
 };
 
@@ -410,6 +464,7 @@ export type ResolversParentTypes = {
   MoneyObject: MoneyObject;
   Int: Scalars['Int'];
   Tag: Tag;
+  TagsResponse: TagsResponse;
   Transaction: Transaction;
   TransactionAttributes: TransactionAttributes;
   HoldInfo: HoldInfo;
@@ -417,29 +472,37 @@ export type ResolversParentTypes = {
   Cashback: Cashback;
   TransactionTagsInput: TransactionTagsInput;
   TransactionTags_TagInput: TransactionTagsTagInput;
-  TransactionTagsPayload: TransactionTagsPayload;
   Account: Account;
   AccountAttributes: AccountAttributes;
+  AccountsResponse: AccountsResponse;
+  AccountResponse: AccountResponse;
   Ping: Ping;
   Meta: Meta;
+  TransactionsResponse: TransactionsResponse;
+  TransactionResponse: TransactionResponse;
+  TransactionTagsPayload: TransactionTagsPayload;
   Webhook: Webhook;
   WebhookAttributes: WebhookAttributes;
   WebhookLog: WebhookLog;
   WebhookLogAttributes: WebhookLogAttributes;
-  WebhookLogRequest: WebhookLogRequest;
-  WebhookLogResponse: WebhookLogResponse;
+  WebhookLogAttributeRequest: WebhookLogAttributeRequest;
+  WebhookLogAttributeResponse: WebhookLogAttributeResponse;
   WebhookEvent: WebhookEvent;
   WebhookEventAttributes: WebhookEventAttributes;
   CreateWebhookInput: CreateWebhookInput;
   CreateWebhook_AttributesInput: CreateWebhookAttributesInput;
   DeleteWebhookInput: DeleteWebhookInput;
   DeleteWebhookPayload: DeleteWebhookPayload;
+  WebhooksResponse: WebhooksResponse;
+  WebhookResponse: WebhookResponse;
+  WebhookLogsResponse: WebhookLogsResponse;
+  WebhookPingResponse: WebhookPingResponse;
   Boolean: Scalars['Boolean'];
 };
 
 export type QueryResolvers<ContextType = GraphRequestContext, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   version?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  tags?: Resolver<Maybe<Array<Maybe<ResolversTypes['Tag']>>>, ParentType, ContextType>;
+  tags?: Resolver<Array<Maybe<ResolversTypes['Tag']>>, ParentType, ContextType>;
   accounts?: Resolver<Maybe<Array<Maybe<ResolversTypes['Account']>>>, ParentType, ContextType>;
   account?: Resolver<Maybe<ResolversTypes['Account']>, ParentType, ContextType, RequireFields<QueryAccountArgs, 'id'>>;
   accountTransactions?: Resolver<Array<Maybe<ResolversTypes['Transaction']>>, ParentType, ContextType, RequireFields<QueryAccountTransactionsArgs, 'id'>>;
@@ -478,6 +541,11 @@ export type MoneyObjectResolvers<ContextType = GraphRequestContext, ParentType e
 export type TagResolvers<ContextType = GraphRequestContext, ParentType extends ResolversParentTypes['Tag'] = ResolversParentTypes['Tag']> = {
   type?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
+};
+
+export type TagsResponseResolvers<ContextType = GraphRequestContext, ParentType extends ResolversParentTypes['TagsResponse'] = ResolversParentTypes['TagsResponse']> = {
+  data?: Resolver<Array<Maybe<ResolversTypes['Tag']>>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 };
 
@@ -522,11 +590,6 @@ export type CashbackResolvers<ContextType = GraphRequestContext, ParentType exte
   __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 };
 
-export type TransactionTagsPayloadResolvers<ContextType = GraphRequestContext, ParentType extends ResolversParentTypes['TransactionTagsPayload'] = ResolversParentTypes['TransactionTagsPayload']> = {
-  tags?: Resolver<Array<ResolversTypes['Tag']>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
-};
-
 export type AccountResolvers<ContextType = GraphRequestContext, ParentType extends ResolversParentTypes['Account'] = ResolversParentTypes['Account']> = {
   type?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
@@ -543,6 +606,16 @@ export type AccountAttributesResolvers<ContextType = GraphRequestContext, Parent
   __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 };
 
+export type AccountsResponseResolvers<ContextType = GraphRequestContext, ParentType extends ResolversParentTypes['AccountsResponse'] = ResolversParentTypes['AccountsResponse']> = {
+  data?: Resolver<Array<Maybe<ResolversTypes['Account']>>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
+};
+
+export type AccountResponseResolvers<ContextType = GraphRequestContext, ParentType extends ResolversParentTypes['AccountResponse'] = ResolversParentTypes['AccountResponse']> = {
+  data?: Resolver<Maybe<ResolversTypes['Account']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
+};
+
 export type PingResolvers<ContextType = GraphRequestContext, ParentType extends ResolversParentTypes['Ping'] = ResolversParentTypes['Ping']> = {
   meta?: Resolver<ResolversTypes['Meta'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType>;
@@ -551,6 +624,21 @@ export type PingResolvers<ContextType = GraphRequestContext, ParentType extends 
 export type MetaResolvers<ContextType = GraphRequestContext, ParentType extends ResolversParentTypes['Meta'] = ResolversParentTypes['Meta']> = {
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   statusEmoji?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
+};
+
+export type TransactionsResponseResolvers<ContextType = GraphRequestContext, ParentType extends ResolversParentTypes['TransactionsResponse'] = ResolversParentTypes['TransactionsResponse']> = {
+  data?: Resolver<Array<Maybe<ResolversTypes['Transaction']>>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
+};
+
+export type TransactionResponseResolvers<ContextType = GraphRequestContext, ParentType extends ResolversParentTypes['TransactionResponse'] = ResolversParentTypes['TransactionResponse']> = {
+  data?: Resolver<Maybe<ResolversTypes['Transaction']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
+};
+
+export type TransactionTagsPayloadResolvers<ContextType = GraphRequestContext, ParentType extends ResolversParentTypes['TransactionTagsPayload'] = ResolversParentTypes['TransactionTagsPayload']> = {
+  tags?: Resolver<Array<ResolversTypes['Tag']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 };
 
@@ -578,19 +666,19 @@ export type WebhookLogResolvers<ContextType = GraphRequestContext, ParentType ex
 };
 
 export type WebhookLogAttributesResolvers<ContextType = GraphRequestContext, ParentType extends ResolversParentTypes['WebhookLogAttributes'] = ResolversParentTypes['WebhookLogAttributes']> = {
-  request?: Resolver<ResolversTypes['WebhookLogRequest'], ParentType, ContextType>;
-  response?: Resolver<Maybe<ResolversTypes['WebhookLogResponse']>, ParentType, ContextType>;
+  request?: Resolver<ResolversTypes['WebhookLogAttributeRequest'], ParentType, ContextType>;
+  response?: Resolver<Maybe<ResolversTypes['WebhookLogAttributeResponse']>, ParentType, ContextType>;
   deliveryStatus?: Resolver<ResolversTypes['WebhookDeliveryStatus'], ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 };
 
-export type WebhookLogRequestResolvers<ContextType = GraphRequestContext, ParentType extends ResolversParentTypes['WebhookLogRequest'] = ResolversParentTypes['WebhookLogRequest']> = {
+export type WebhookLogAttributeRequestResolvers<ContextType = GraphRequestContext, ParentType extends ResolversParentTypes['WebhookLogAttributeRequest'] = ResolversParentTypes['WebhookLogAttributeRequest']> = {
   body?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 };
 
-export type WebhookLogResponseResolvers<ContextType = GraphRequestContext, ParentType extends ResolversParentTypes['WebhookLogResponse'] = ResolversParentTypes['WebhookLogResponse']> = {
+export type WebhookLogAttributeResponseResolvers<ContextType = GraphRequestContext, ParentType extends ResolversParentTypes['WebhookLogAttributeResponse'] = ResolversParentTypes['WebhookLogAttributeResponse']> = {
   statusCode?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   body?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType>;
@@ -614,6 +702,26 @@ export type DeleteWebhookPayloadResolvers<ContextType = GraphRequestContext, Par
   __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 };
 
+export type WebhooksResponseResolvers<ContextType = GraphRequestContext, ParentType extends ResolversParentTypes['WebhooksResponse'] = ResolversParentTypes['WebhooksResponse']> = {
+  data?: Resolver<Array<Maybe<ResolversTypes['Webhook']>>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
+};
+
+export type WebhookResponseResolvers<ContextType = GraphRequestContext, ParentType extends ResolversParentTypes['WebhookResponse'] = ResolversParentTypes['WebhookResponse']> = {
+  data?: Resolver<Maybe<ResolversTypes['Webhook']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
+};
+
+export type WebhookLogsResponseResolvers<ContextType = GraphRequestContext, ParentType extends ResolversParentTypes['WebhookLogsResponse'] = ResolversParentTypes['WebhookLogsResponse']> = {
+  data?: Resolver<Array<Maybe<ResolversTypes['WebhookLog']>>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
+};
+
+export type WebhookPingResponseResolvers<ContextType = GraphRequestContext, ParentType extends ResolversParentTypes['WebhookPingResponse'] = ResolversParentTypes['WebhookPingResponse']> = {
+  data?: Resolver<Maybe<ResolversTypes['WebhookEvent']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
+};
+
 export type Resolvers<ContextType = GraphRequestContext> = {
   Query?: QueryResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
@@ -621,25 +729,34 @@ export type Resolvers<ContextType = GraphRequestContext> = {
   DateTime?: GraphQLScalarType;
   MoneyObject?: MoneyObjectResolvers<ContextType>;
   Tag?: TagResolvers<ContextType>;
+  TagsResponse?: TagsResponseResolvers<ContextType>;
   Transaction?: TransactionResolvers<ContextType>;
   TransactionAttributes?: TransactionAttributesResolvers<ContextType>;
   HoldInfo?: HoldInfoResolvers<ContextType>;
   RoundUp?: RoundUpResolvers<ContextType>;
   Cashback?: CashbackResolvers<ContextType>;
-  TransactionTagsPayload?: TransactionTagsPayloadResolvers<ContextType>;
   Account?: AccountResolvers<ContextType>;
   AccountAttributes?: AccountAttributesResolvers<ContextType>;
+  AccountsResponse?: AccountsResponseResolvers<ContextType>;
+  AccountResponse?: AccountResponseResolvers<ContextType>;
   Ping?: PingResolvers<ContextType>;
   Meta?: MetaResolvers<ContextType>;
+  TransactionsResponse?: TransactionsResponseResolvers<ContextType>;
+  TransactionResponse?: TransactionResponseResolvers<ContextType>;
+  TransactionTagsPayload?: TransactionTagsPayloadResolvers<ContextType>;
   Webhook?: WebhookResolvers<ContextType>;
   WebhookAttributes?: WebhookAttributesResolvers<ContextType>;
   WebhookLog?: WebhookLogResolvers<ContextType>;
   WebhookLogAttributes?: WebhookLogAttributesResolvers<ContextType>;
-  WebhookLogRequest?: WebhookLogRequestResolvers<ContextType>;
-  WebhookLogResponse?: WebhookLogResponseResolvers<ContextType>;
+  WebhookLogAttributeRequest?: WebhookLogAttributeRequestResolvers<ContextType>;
+  WebhookLogAttributeResponse?: WebhookLogAttributeResponseResolvers<ContextType>;
   WebhookEvent?: WebhookEventResolvers<ContextType>;
   WebhookEventAttributes?: WebhookEventAttributesResolvers<ContextType>;
   DeleteWebhookPayload?: DeleteWebhookPayloadResolvers<ContextType>;
+  WebhooksResponse?: WebhooksResponseResolvers<ContextType>;
+  WebhookResponse?: WebhookResponseResolvers<ContextType>;
+  WebhookLogsResponse?: WebhookLogsResponseResolvers<ContextType>;
+  WebhookPingResponse?: WebhookPingResponseResolvers<ContextType>;
 };
 
 
