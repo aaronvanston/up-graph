@@ -25,4 +25,8 @@ export const typeDefs = gql`
     TRANSACTIONAL
     SAVER
   }
+
+  extend type Transaction {
+    account: Account!
+  }
 `

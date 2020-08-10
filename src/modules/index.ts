@@ -1,6 +1,7 @@
 import { GraphQLModule } from '@graphql-modules/core'
 
 import { AccountsModule } from './accounts'
+import { AccountTransactionsModule } from './accountTransactions'
 import { CommonModule } from './common'
 import { DatetimeModule } from './datetime'
 import { MoneyModule } from './money'
@@ -12,6 +13,7 @@ import { WebhooksModule } from './webhooks'
 export const MainModule = new GraphQLModule({
   imports: [
     AccountsModule,
+    AccountTransactionsModule,
     CommonModule,
     DatetimeModule,
     MoneyModule,
