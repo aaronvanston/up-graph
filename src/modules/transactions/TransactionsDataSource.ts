@@ -21,6 +21,11 @@ export class TransactionsDataSource extends RESTDataSourceWithAuth {
     return transaction.data ?? null
   }
 
+  async geTransactionsByAccount(id: string): Promise<Transaction[]> {
+    const transactions = await this.get(`accounts/${id}/transactions`)
+    return transactions.data ?? null
+  }
+
   async addTransactionTags(
     createTransactionTagsInput: TransactionTagsInput
   ): Promise<TransactionTagsPayload> {

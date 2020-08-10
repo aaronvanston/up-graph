@@ -16,9 +16,4 @@ export class AccountsDataSource extends RESTDataSourceWithAuth {
     const account = await this.get(`accounts/${id}`)
     return account.data ?? null
   }
-
-  async getAccountTransactions(id: string): Promise<Transaction[]> {
-    const transactions = await this.get(`accounts/${id}/transactions`)
-    return transactions.data ?? null
-  }
 }
