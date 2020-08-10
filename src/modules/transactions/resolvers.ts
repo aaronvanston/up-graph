@@ -13,4 +13,9 @@ export const resolvers: Resolvers = {
     deleteTransactionTags: (_parent, { input }, { dataSources }) =>
       dataSources.transactions.removeTransactionTags(input),
   },
+
+  Transaction: {
+    account: async (parent, _args, { dataSources }) =>
+      dataSources.accounts.getAccount(parent.relationships.account.data.id),
+  },
 }

@@ -15,14 +15,6 @@ export const typeDefs = gql`
     transactions: [Transaction]!
   }
 
-  type TransactionsResponse {
-    data: [Transaction]!
-  }
-
-  type TransactionResponse {
-    data: Transaction
-  }
-
   type TransactionTagsPayload {
     tags: [Tag!]!
   }

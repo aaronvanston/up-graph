@@ -1,7 +1,9 @@
 import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
+import { TransactionModel } from './models';
 import { GraphRequestContext } from '../types';
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type RequireFields<T, K extends keyof T> = { [X in Exclude<keyof T, K>]?: T[X] } & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -207,16 +209,6 @@ export type Meta = {
   statusEmoji: Scalars['String'];
 };
 
-export type TransactionsResponse = {
-  __typename?: 'TransactionsResponse';
-  data: Array<Maybe<Transaction>>;
-};
-
-export type TransactionResponse = {
-  __typename?: 'TransactionResponse';
-  data?: Maybe<Transaction>;
-};
-
 export type TransactionTagsPayload = {
   __typename?: 'TransactionTagsPayload';
   tags: Array<Tag>;
@@ -415,7 +407,7 @@ export type ResolversTypes = {
   Int: ResolverTypeWrapper<Scalars['Int']>;
   Tag: ResolverTypeWrapper<Tag>;
   TagsResponse: ResolverTypeWrapper<TagsResponse>;
-  Transaction: ResolverTypeWrapper<Transaction>;
+  Transaction: ResolverTypeWrapper<TransactionModel>;
   TransactionAttributes: ResolverTypeWrapper<TransactionAttributes>;
   TransactionStatus: TransactionStatus;
   HoldInfo: ResolverTypeWrapper<HoldInfo>;
@@ -423,15 +415,13 @@ export type ResolversTypes = {
   Cashback: ResolverTypeWrapper<Cashback>;
   TransactionTagsInput: TransactionTagsInput;
   TransactionTags_TagInput: TransactionTagsTagInput;
-  Account: ResolverTypeWrapper<Account>;
+  Account: ResolverTypeWrapper<Omit<Account, 'transactions'> & { transactions: Array<Maybe<ResolversTypes['Transaction']>> }>;
   AccountAttributes: ResolverTypeWrapper<AccountAttributes>;
   AccountType: AccountType;
-  AccountsResponse: ResolverTypeWrapper<AccountsResponse>;
-  AccountResponse: ResolverTypeWrapper<AccountResponse>;
+  AccountsResponse: ResolverTypeWrapper<Omit<AccountsResponse, 'data'> & { data: Array<Maybe<ResolversTypes['Account']>> }>;
+  AccountResponse: ResolverTypeWrapper<Omit<AccountResponse, 'data'> & { data?: Maybe<ResolversTypes['Account']> }>;
   Ping: ResolverTypeWrapper<Ping>;
   Meta: ResolverTypeWrapper<Meta>;
-  TransactionsResponse: ResolverTypeWrapper<TransactionsResponse>;
-  TransactionResponse: ResolverTypeWrapper<TransactionResponse>;
   TransactionTagsPayload: ResolverTypeWrapper<TransactionTagsPayload>;
   Webhook: ResolverTypeWrapper<Webhook>;
   WebhookAttributes: ResolverTypeWrapper<WebhookAttributes>;
@@ -465,21 +455,19 @@ export type ResolversParentTypes = {
   Int: Scalars['Int'];
   Tag: Tag;
   TagsResponse: TagsResponse;
-  Transaction: Transaction;
+  Transaction: TransactionModel;
   TransactionAttributes: TransactionAttributes;
   HoldInfo: HoldInfo;
   RoundUp: RoundUp;
   Cashback: Cashback;
   TransactionTagsInput: TransactionTagsInput;
   TransactionTags_TagInput: TransactionTagsTagInput;
-  Account: Account;
+  Account: Omit<Account, 'transactions'> & { transactions: Array<Maybe<ResolversParentTypes['Transaction']>> };
   AccountAttributes: AccountAttributes;
-  AccountsResponse: AccountsResponse;
-  AccountResponse: AccountResponse;
+  AccountsResponse: Omit<AccountsResponse, 'data'> & { data: Array<Maybe<ResolversParentTypes['Account']>> };
+  AccountResponse: Omit<AccountResponse, 'data'> & { data?: Maybe<ResolversParentTypes['Account']> };
   Ping: Ping;
   Meta: Meta;
-  TransactionsResponse: TransactionsResponse;
-  TransactionResponse: TransactionResponse;
   TransactionTagsPayload: TransactionTagsPayload;
   Webhook: Webhook;
   WebhookAttributes: WebhookAttributes;
@@ -627,16 +615,6 @@ export type MetaResolvers<ContextType = GraphRequestContext, ParentType extends 
   __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 };
 
-export type TransactionsResponseResolvers<ContextType = GraphRequestContext, ParentType extends ResolversParentTypes['TransactionsResponse'] = ResolversParentTypes['TransactionsResponse']> = {
-  data?: Resolver<Array<Maybe<ResolversTypes['Transaction']>>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
-};
-
-export type TransactionResponseResolvers<ContextType = GraphRequestContext, ParentType extends ResolversParentTypes['TransactionResponse'] = ResolversParentTypes['TransactionResponse']> = {
-  data?: Resolver<Maybe<ResolversTypes['Transaction']>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
-};
-
 export type TransactionTagsPayloadResolvers<ContextType = GraphRequestContext, ParentType extends ResolversParentTypes['TransactionTagsPayload'] = ResolversParentTypes['TransactionTagsPayload']> = {
   tags?: Resolver<Array<ResolversTypes['Tag']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType>;
@@ -741,8 +719,6 @@ export type Resolvers<ContextType = GraphRequestContext> = {
   AccountResponse?: AccountResponseResolvers<ContextType>;
   Ping?: PingResolvers<ContextType>;
   Meta?: MetaResolvers<ContextType>;
-  TransactionsResponse?: TransactionsResponseResolvers<ContextType>;
-  TransactionResponse?: TransactionResponseResolvers<ContextType>;
   TransactionTagsPayload?: TransactionTagsPayloadResolvers<ContextType>;
   Webhook?: WebhookResolvers<ContextType>;
   WebhookAttributes?: WebhookAttributesResolvers<ContextType>;
