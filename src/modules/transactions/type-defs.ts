@@ -2,7 +2,7 @@ import { gql } from 'apollo-server-koa'
 
 export const typeDefs = gql`
   extend type Query {
-    transactions: [Transaction]!
+    transactions(filter: TagTransactionFilterInput): [Transaction]!
     transaction(id: String!): Transaction
   }
 
@@ -17,5 +17,9 @@ export const typeDefs = gql`
 
   type TransactionTagsPayload {
     tags: [Tag!]!
+  }
+
+  input TagTransactionFilterInput {
+    tag: String!
   }
 `

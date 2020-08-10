@@ -43,6 +43,11 @@ export type QueryAccountTransactionsArgs = {
 };
 
 
+export type QueryTransactionsArgs = {
+  filter?: Maybe<TagTransactionFilterInput>;
+};
+
+
 export type QueryTransactionArgs = {
   id: Scalars['String'];
 };
@@ -212,6 +217,10 @@ export type Meta = {
 export type TransactionTagsPayload = {
   __typename?: 'TransactionTagsPayload';
   tags: Array<Tag>;
+};
+
+export type TagTransactionFilterInput = {
+  tag: Scalars['String'];
 };
 
 export type Webhook = {
@@ -423,6 +432,7 @@ export type ResolversTypes = {
   Ping: ResolverTypeWrapper<Ping>;
   Meta: ResolverTypeWrapper<Meta>;
   TransactionTagsPayload: ResolverTypeWrapper<TransactionTagsPayload>;
+  TagTransactionFilterInput: TagTransactionFilterInput;
   Webhook: ResolverTypeWrapper<Webhook>;
   WebhookAttributes: ResolverTypeWrapper<WebhookAttributes>;
   WebhookLog: ResolverTypeWrapper<WebhookLog>;
@@ -469,6 +479,7 @@ export type ResolversParentTypes = {
   Ping: Ping;
   Meta: Meta;
   TransactionTagsPayload: TransactionTagsPayload;
+  TagTransactionFilterInput: TagTransactionFilterInput;
   Webhook: Webhook;
   WebhookAttributes: WebhookAttributes;
   WebhookLog: WebhookLog;
@@ -495,7 +506,7 @@ export type QueryResolvers<ContextType = GraphRequestContext, ParentType extends
   account?: Resolver<Maybe<ResolversTypes['Account']>, ParentType, ContextType, RequireFields<QueryAccountArgs, 'id'>>;
   accountTransactions?: Resolver<Array<Maybe<ResolversTypes['Transaction']>>, ParentType, ContextType, RequireFields<QueryAccountTransactionsArgs, 'id'>>;
   ping?: Resolver<Maybe<ResolversTypes['Ping']>, ParentType, ContextType>;
-  transactions?: Resolver<Array<Maybe<ResolversTypes['Transaction']>>, ParentType, ContextType>;
+  transactions?: Resolver<Array<Maybe<ResolversTypes['Transaction']>>, ParentType, ContextType, RequireFields<QueryTransactionsArgs, never>>;
   transaction?: Resolver<Maybe<ResolversTypes['Transaction']>, ParentType, ContextType, RequireFields<QueryTransactionArgs, 'id'>>;
   webhooks?: Resolver<Array<Maybe<ResolversTypes['Webhook']>>, ParentType, ContextType>;
   webhook?: Resolver<Maybe<ResolversTypes['Webhook']>, ParentType, ContextType, RequireFields<QueryWebhookArgs, 'id'>>;

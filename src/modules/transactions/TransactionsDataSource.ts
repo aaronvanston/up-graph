@@ -1,5 +1,10 @@
+import * as qs from 'qs'
 import { RESTDataSourceWithAuth } from '../../data-sources/RESTDataSourceWithAuth'
-import { TransactionTagsInput, TransactionTagsPayload } from '../schema'
+import {
+  TransactionTagsInput,
+  TransactionTagsPayload,
+  TagTransactionFilterInput,
+} from '../schema'
 import {
   TransactionModel,
   TransactionModelResponse,
@@ -12,9 +17,13 @@ export class TransactionsDataSource extends RESTDataSourceWithAuth {
     this.baseURL = baseURL
   }
 
-  async getTransactions(): Promise<TransactionModel[]> {
+  async getTransactions(
+    filter: TagTransactionFilterInput
+  ): Promise<TransactionModel[]> {
+    const filterString = qs.stringify({ filter }, { encode: false })
     const transactions = await this.get<TransactionsModelResponse>(
-      'transactions'
+      'transactions',
+      filterString
     )
     return transactions.data ?? null
   }
