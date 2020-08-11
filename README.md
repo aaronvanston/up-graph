@@ -1,6 +1,10 @@
+<div align="center">
+  <img alt="up-graph" src="./assets/up-graph.png" />
+</div>
+
 # up-graph 😎
 
-Unofficial GraphQL layer for [UP Bank API](https://developer.up.com.au/)
+Unofficial GraphQL layer for [Up bank API](https://developer.up.com.au/)
 
 **Built using:**
 
