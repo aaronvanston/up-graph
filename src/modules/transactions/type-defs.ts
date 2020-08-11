@@ -20,6 +20,8 @@ export const typeDefs = gql`
   }
 
   input TagTransactionFilterInput {
-    tag: String!
+    tag: String
+    until: DateTime
+    since: DateTime
   }
 `

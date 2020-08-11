@@ -6,7 +6,6 @@ import { AccountsModule } from '../accounts'
 import { AccountTransactionsModule } from '../accountTransactions'
 import { CommonModule } from '../common'
 import { DatetimeModule } from '../datetime'
-import { MoneyModule } from '../money'
 import { TransactionTagsModule } from '../transactionTags'
 
 import { resolvers } from './resolvers'
@@ -19,7 +18,6 @@ export const TransactionsModule = new GraphQLModule({
     AccountTransactionsModule,
     CommonModule,
     DatetimeModule,
-    MoneyModule,
     TransactionTagsModule,
   ],
   typeDefs,

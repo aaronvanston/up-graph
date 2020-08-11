@@ -217,7 +217,9 @@ export type TagsResponse = {
 };
 
 export type TagTransactionFilterInput = {
-  tag: Scalars['String'];
+  tag?: Maybe<Scalars['String']>;
+  until?: Maybe<Scalars['DateTime']>;
+  since?: Maybe<Scalars['DateTime']>;
 };
 
 export type Webhook = {
