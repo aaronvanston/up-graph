@@ -15,7 +15,11 @@ export const resolvers: Resolvers = {
   },
 
   Transaction: {
-    account: async (parent, _args, { dataSources }) =>
-      dataSources.accounts.getAccount(parent.relationships.account.data.id),
+    account: async (parent, _args, { dataSources }) => {
+      return dataSources.accounts.getAccount(
+        parent.relationships.account.data.id
+      )
+    },
+    tags: (parent) => parent.relationships.tags.data,
   },
 }

@@ -1,10 +1,6 @@
 import * as qs from 'qs'
 import { RESTDataSourceWithAuth } from '../../data-sources/RESTDataSourceWithAuth'
-import {
-  TransactionTagsInput,
-  TransactionTagsPayload,
-  TagTransactionFilterInput,
-} from '../schema'
+import { TransactionTagsInput, TagTransactionFilterInput } from '../schema'
 import {
   TransactionModel,
   TransactionModelResponse,
@@ -44,17 +40,18 @@ export class TransactionsDataSource extends RESTDataSourceWithAuth {
 
   async addTransactionTags(
     createTransactionTagsInput: TransactionTagsInput
-  ): Promise<TransactionTagsPayload> {
+  ): Promise<TransactionModel> {
     const { id, tags } = createTransactionTagsInput
     await this.post(`transactions/${id}/relationships/tags`, {
       data: tags,
     })
-    return { tags }
+
+    return this.getTransaction(id)
   }
 
   async removeTransactionTags(
     deleteTransactionTagsInput: TransactionTagsInput
-  ): Promise<TransactionTagsPayload> {
+  ): Promise<TransactionModel> {
     const { id, tags } = deleteTransactionTagsInput
 
     // Issue with apollo-datasource-rest means DELETE requests cannot include
@@ -66,6 +63,6 @@ export class TransactionsDataSource extends RESTDataSourceWithAuth {
         data: tags,
       }),
     })
-    return { tags }
+    return this.getTransaction(id)
   }
 }

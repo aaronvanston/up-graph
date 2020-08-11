@@ -11,6 +11,7 @@ generates:
       contextType: ../types#GraphRequestContext
       mappers:
         Transaction: ./models#TransactionModel
+        Tag: ./models#TagModel
       scalars:
         Date: Date
         DateTime: Date

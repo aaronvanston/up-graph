@@ -8,6 +8,7 @@ import { MoneyModule } from './money'
 import { PingModule } from './ping'
 import { TagsModule } from './tags'
 import { TransactionsModule } from './transactions'
+import { TransactionTagsModule } from './transactionTags'
 import { WebhooksModule } from './webhooks'
 
 export const MainModule = new GraphQLModule({
@@ -20,6 +21,7 @@ export const MainModule = new GraphQLModule({
     PingModule,
     TagsModule,
     TransactionsModule,
+    TransactionTagsModule,
     WebhooksModule,
   ],
 })

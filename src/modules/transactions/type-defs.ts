@@ -7,16 +7,16 @@ export const typeDefs = gql`
   }
 
   extend type Mutation {
-    createTransactionTags(input: TransactionTagsInput!): TransactionTagsPayload!
-    deleteTransactionTags(input: TransactionTagsInput!): TransactionTagsPayload!
+    createTransactionTags(input: TransactionTagsInput!): Transaction!
+    deleteTransactionTags(input: TransactionTagsInput!): Transaction!
   }
 
   extend type Account {
     transactions: [Transaction]!
   }
 
-  type TransactionTagsPayload {
-    tags: [Tag!]!
+  extend type Transaction {
+    tags: [Tag]!
   }
 
   input TagTransactionFilterInput {

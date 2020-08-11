@@ -5,12 +5,11 @@ export const typeDefs = gql`
     tags: [Tag]!
   }
 
-  type Tag {
-    type: String!
-    id: String!
-  }
-
   type TagsResponse {
     data: [Tag]!
+  }
+
+  extend type Tag {
+    transactions: [Transaction]!
   }
 `
