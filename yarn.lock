@@ -1159,10 +1159,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/graphql-iso-date@3.4.0":
-  version "3.4.0"
-  resolved "https://registry.yarnpkg.com/@types/graphql-iso-date/-/graphql-iso-date-3.4.0.tgz#b6710b21e3b0bfdb1a0529b285148d98eac18b1f"
-  integrity sha512-V3jITHTsoI2E8TGt9+/HPDz6LWt3z9/HYnPJYWI6WwiLRexsngg7KzaQlCgQkA4jkEbGPROUD0hJFc9F02W9WA==
+"@types/graphql-iso-date@3.4.3":
+  version "3.4.3"
+  resolved "https://registry.yarnpkg.com/@types/graphql-iso-date/-/graphql-iso-date-3.4.3.tgz#de4a916fb2b7e59b11b4f595883e8510b6b8267e"
+  integrity sha512-XBNgBXEY8Yy0Ax2NE7fCmeCTk8dc4AALPWpaDtIuP0bIez2eyPn9CVuhDnG153hUnX+QRASKJXcc+I2pplQ2ww==
   dependencies:
     graphql "^15.1.0"
 
