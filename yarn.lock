@@ -1242,10 +1242,10 @@
     "@types/koa-compose" "*"
     "@types/node" "*"
 
-"@types/koa@2.11.4":
-  version "2.11.4"
-  resolved "https://registry.yarnpkg.com/@types/koa/-/koa-2.11.4.tgz#8af02a069a9f8e08fa47b8da28d982e652f69cfb"
-  integrity sha512-Etqs0kdqbuAsNr5k6mlZQelpZKVwMu9WPRHVVTLnceZlhr0pYmblRNJbCgoCMzKWWePldydU0AYEOX4Q9fnGUQ==
+"@types/koa@2.15.2":
+  version "2.15.2"
+  resolved "https://registry.yarnpkg.com/@types/koa/-/koa-2.15.2.tgz#cc570a70170713b1ab6b93384cabf4943a25678b"
+  integrity sha512-CB+iyjjh1uS5N6/CKwXvw0qA7USMS2WVc4Tjf660yCjhdvqzNr8gdFcIawB41zGGptOQ+d1fnpaQWIIUXYxR3w==
   dependencies:
     "@types/accepts" "*"
     "@types/content-disposition" "*"
