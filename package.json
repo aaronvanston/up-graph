@@ -23,7 +23,7 @@
     "apollo-datasource-rest": "0.9.4",
     "apollo-server-koa": "2.18.0",
     "graphql-iso-date": "3.6.1",
-    "koa": "2.13.0",
+    "koa": "2.16.1",
     "qs": "^6.9.4"
   },
   "devDependencies": {
