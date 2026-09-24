@@ -15,9 +15,9 @@
     "start": "nodemon"
   },
   "dependencies": {
-    "@graphql-codegen/cli": "1.17.8",
-    "@graphql-codegen/typescript": "1.17.9",
-    "@graphql-codegen/typescript-resolvers": "1.17.9",
+    "@graphql-codegen/cli": "1.21.8",
+    "@graphql-codegen/typescript": "1.23.0",
+    "@graphql-codegen/typescript-resolvers": "1.20.0",
     "@graphql-modules/core": "0.7.17",
     "apollo-datasource": "0.7.2",
     "apollo-datasource-rest": "0.9.4",
